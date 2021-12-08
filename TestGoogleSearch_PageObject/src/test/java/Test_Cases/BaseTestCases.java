@@ -21,24 +21,21 @@ public class BaseTestCases {
 	HomePage homePage;
 	InstabugSearch insta;
 	PercentageSign percentSign;
-	 String firstString;
-	  String secondString;
-	  String thirdString ;
-
-
+	String firstString;
+	String secondString;
+	String thirdString;
 
 	@BeforeClass
 	public void setup() {
 		TestBase.initialize();
 		TestBase.actionInstance();
 	}
-	
-	@Test(priority = 1
-			,dataProvider = "testData")
-	public  void arraySpliter(String text1, String text2, String text3) {
-		  firstString =text1;
-		   secondString=text2;
-		   thirdString =text3;
+
+	@Test(priority = 1, dataProvider = "testData")
+	public void arraySpliter(String text1, String text2, String text3) {
+		firstString = text1;
+		secondString = text2;
+		thirdString = text3;
 
 	}
 
@@ -47,31 +44,24 @@ public class BaseTestCases {
 
 		percentSign = new PercentageSign();
 		percentSign.insertPercentageSign(firstString);
-	   	  Assert.assertEquals(TestBase.driver.
-	   			  findElement(By.partialLinkText(Constants.percentageLink)).
-	   			  isDisplayed(),true);
+		percentSign.checkPercentageLink();
 	}
-	
+
 	@Test(priority = 3)
 	public void checkGoogleSearch() {
 		homePage = new HomePage();
 		homePage.insertText(secondString);
 		homePage.clickOnSearch();
-		  Assert.assertEquals(TestBase.driver.
-				  findElement(By.partialLinkText(Constants.googleLink)).
-				  isDisplayed(),true);
-		  
+		homePage.checkGoogleLink();
+
 	}
-	   	
 
 	@Test(priority = 4)
 	public void checkInstabugSearch() {
 		insta = new InstabugSearch();
 		insta.insertText(thirdString);
 		insta.autoComplete();
-		  Assert.assertEquals(TestBase.driver.
-				  findElement(By.partialLinkText(Constants.instabugLink)).
-				  isDisplayed(),true);
+		insta.checkInstabugLink();
 
 	}
 
@@ -79,8 +69,6 @@ public class BaseTestCases {
 	public void tearDown() {
 		TestBase.quit();
 	}
-	
-
 
 	@DataProvider
 	public String[][] testData() throws InvalidFormatException, IOException {
